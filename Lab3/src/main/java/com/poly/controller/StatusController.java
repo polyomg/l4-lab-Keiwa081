@@ -1,4 +1,4 @@
-package poly.edu.controller;
+package com.poly.controller;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import poly.edu.model.Staff;
+import com.poly.model.Staff;
 
 @Controller
 public class StatusController {

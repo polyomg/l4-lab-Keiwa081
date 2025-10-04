@@ -1,4 +1,4 @@
-package poly.edu.model;
+package com.poly.model;
 
 import java.util.Date;
 

@@ -1,14 +1,16 @@
-package poly.edu.controller;
+package com.poly.controller;
 
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import poly.edu.model.Staff;
+
+import com.poly.model.Staff;
 
 @Controller
-public class ListController {
-	@RequestMapping("/poly/staff-list")
+public class RadioController {
+	@RequestMapping("/poly/list-controls")
 	public String list(Model model) {
 		List<Staff> list = List.of(Staff.builder().id("user1@gmail.com").fullname("nguyễn văn user1").level(0).build(),
 				Staff.builder().id("user2@gmail.com").fullname("nguyễn văn user2").level(1).build(),
@@ -17,6 +19,6 @@ public class ListController {
 				Staff.builder().id("user5@gmail.com").fullname("nguyễn văn user5").level(1).build(),
 				Staff.builder().id("user6@gmail.com").fullname("nguyễn văn user6").level(0).build());
 		model.addAttribute("list", list);
-		return "/poly/staff-list";
+		return "/poly/list-controls";
 	}
 }
