@@ -23,9 +23,10 @@
         <button>Đăng ký</button>
     </form>
 
-    <div th:if="${filename != null}">
-        <h4>Ảnh đã upload:</h4>
-        <img th:src="@{'/uploads/' + ${filename}}" width="150" style="border-radius: 10px; border: 1px solid #ccc;">
-    </div>
+	<div th:if="${filename != null}">
+	    <h4>Ảnh đã upload:</h4>
+	    <img th:src="@{'/' + ${filename}}" width="150"
+	         style="border-radius: 10px; border: 1px solid #ccc;">
+	</div>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import poly.edu.service.ParamService;
@@ -15,7 +16,7 @@ import poly.edu.service.ParamService;
 public class RegisterController {
 
     @Autowired
-    ParamService paramService;
+    ParamService paramService;	
 
     @GetMapping("/account/register")
     public String showForm() {
@@ -23,23 +24,32 @@ public class RegisterController {
     }
 
     @PostMapping("/account/register")
-    public String register(Model model, MultipartFile photo) {
+    public String register(Model model, @RequestParam("photo") MultipartFile photo) {
         try {
             String username = paramService.getString("username", "");
             String password = paramService.getString("password", "");
-            MultipartFile file = photo;
 
-            // Lưu file ảnh vào thư mục uploads
-            File savedFile = paramService.save(file, "/uploads/");
-
-            if (savedFile != null) {
-                model.addAttribute("message", "Đăng ký thành công!");
-                model.addAttribute("color", "green");
-                model.addAttribute("filename", savedFile.getName());
-            } else {
+            if (photo.isEmpty()) {
                 model.addAttribute("message", "Vui lòng chọn hình để tải lên!");
                 model.addAttribute("color", "red");
+                return "/account/register";
             }
+
+            // Đường dẫn thật trong thư mục static (để truy cập được bằng URL)
+            String uploadDir = new File("src/main/resources/static/uploads").getAbsolutePath();
+            File directory = new File(uploadDir);
+            if (!directory.exists()) {
+                directory.mkdirs(); // Tạo thư mục nếu chưa có
+            }
+
+            // Lưu file vào thư mục
+            String fileName = photo.getOriginalFilename();
+            File dest = new File(directory, fileName);
+            photo.transferTo(dest);
+
+            model.addAttribute("message", "Đăng ký thành công!");
+            model.addAttribute("color", "green");
+            model.addAttribute("filename", "uploads/" + fileName);
 
         } catch (Exception e) {
             model.addAttribute("message", "Lỗi: " + e.getMessage());
@@ -48,4 +58,5 @@ public class RegisterController {
 
         return "/account/register";
     }
+
 }
