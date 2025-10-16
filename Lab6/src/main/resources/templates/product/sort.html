@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="utf-8">
+ <title>Product Sorting</title>
+</head>
+<body>
+ <h3>
+   SORTING BY <span th:text="${field}">PRICE</span>
+   (<span th:text="${direction.toUpperCase()}"></span>)
+ </h3>
+
+ <table border="1" style="width:100%">
+   <tr>
+     <th>
+       <a th:href="@{/product/sort(field='id', direction=${reverseDir})}">
+         Id
+         <span th:if="${field == 'ID'}"
+               th:text="${direction == 'asc' ? '▲' : '▼'}"></span>
+       </a>
+     </th>
+     <th>
+       <a th:href="@{/product/sort(field='name', direction=${reverseDir})}">
+         Name
+         <span th:if="${field == 'NAME'}"
+               th:text="${direction == 'asc' ? '▲' : '▼'}"></span>
+       </a>
+     </th>
+     <th>
+       <a th:href="@{/product/sort(field='price', direction=${reverseDir})}">
+         Price
+         <span th:if="${field == 'PRICE'}"
+               th:text="${direction == 'asc' ? '▲' : '▼'}"></span>
+       </a>
+     </th>
+     <th>
+       <a th:href="@{/product/sort(field='createDate', direction=${reverseDir})}">
+         Date
+         <span th:if="${field == 'CREATEDATE'}"
+               th:text="${direction == 'asc' ? '▲' : '▼'}"></span>
+       </a>
+     </th>
+   </tr>
+
+   <th:block th:each="item: ${items}">
+     <tr>
+       <td th:text="${item.id}"></td>
+       <td th:text="${item.name}"></td>
+       <td th:text="${item.price}"></td>
+       <td th:text="${item.createDate}"></td>
+     </tr>
+   </th:block>
+ </table>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:object="${item}" method="post">
+		<div th:fragment="form">
+			<input th:field="*{id}" placeholder="Category Id?" /> <input
+				th:field="*{name}" placeholder="Category Name?" />
+			<hr>
+			<button formaction="/category/create" type="submit">Create</button>
+			<button formaction="/category/update" type="submit">Update</button>
+			<a th:href="@{|/category/delete/${item.id}|}">Delete</a> <a
+				href="/category/index">Reset</a>
+		</div>
+	</form>
+</body>
+</html>
