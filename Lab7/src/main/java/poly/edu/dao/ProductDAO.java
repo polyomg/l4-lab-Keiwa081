@@ -12,10 +12,13 @@ import poly.edu.entity.Report;
 
 @Repository
 public interface ProductDAO extends JpaRepository<Product, Integer> {
-	@Query("FROM Product o WHERE o.price BETWEEN ?1 AND ?2")
+	//=gốc
+//	@Query("FROM Product o WHERE o.price BETWEEN ?1 AND ?2")
+//	List<Product> findByPrice(double minPrice, double maxPrice);
+	
+//	// Sắp xếp tăng dần theo giá
+	@Query("FROM Product o WHERE o.price BETWEEN ?1 AND ?2 ORDER BY o.price ASC")
 	List<Product> findByPrice(double minPrice, double maxPrice);
-	// Bai 4
-	List<Product> findByPriceBetween(double minPrice, double maxPrice);
 
 	@Query("FROM Product o WHERE o.name LIKE ?1")
 	Page<Product> findByKeywords(String keywords, Pageable pageable);

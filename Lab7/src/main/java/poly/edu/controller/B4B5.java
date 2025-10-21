@@ -38,11 +38,26 @@ public class B4B5 {
     public String searchAndPage(Model model,  
                                 @RequestParam("keywords") Optional<String> kw, 
                                 @RequestParam("p") Optional<Integer> p) { 
+        
         String kwords = kw.orElse(session.get("keywords", "")); 
         session.set("keywords", kwords); 
-        Pageable pageable = PageRequest.of(p.orElse(0), 5); 
+
+        int pageNumber = p.orElse(0);
+        if (pageNumber < 0) {
+            pageNumber = 0;
+        }
+
+        Pageable pageable = PageRequest.of(pageNumber, 5); 
         Page<Product> page = dao.findAllByNameLike("%" + kwords + "%", pageable); 
+
+        // ✅ Nếu người dùng nhập p lớn hơn tổng số trang, tự động quay về trang cuối
+        if (pageNumber >= page.getTotalPages() && page.getTotalPages() > 0) {
+            pageable = PageRequest.of(page.getTotalPages() - 1, 5);
+            page = dao.findAllByNameLike("%" + kwords + "%", pageable);
+        }
+
         model.addAttribute("page", page); 
+        model.addAttribute("keywords", kwords);
         return "product/search-and-page2";
     }
 }
