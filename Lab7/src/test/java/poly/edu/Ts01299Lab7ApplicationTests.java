@@ -1,13 +1,13 @@
-package com.poly.lab7;
+package poly.edu;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Lab7ApplicationTests {
+class Ts01299Lab7ApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }
