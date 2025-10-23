@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Gửi Email</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <div class="card shadow-lg col-md-8 mx-auto">
+    <div class="card-header bg-primary text-white text-center">
+      <h3>📧 Gửi Email</h3>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/mail/send}" th:object="${mail}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label class="form-label">From:</label>
+          <input type="email" class="form-control" th:field="*{from}" placeholder="WebShop <web-shop@gmail.com>">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">To:</label>
+          <input type="email" class="form-control" th:field="*{to}" placeholder="Người nhận" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">CC:</label>
+          <input type="text" class="form-control" th:field="*{cc}" placeholder="(Không bắt buộc)">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">BCC:</label>
+          <input type="text" class="form-control" th:field="*{bcc}" placeholder="(Không bắt buộc)">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Subject:</label>
+          <input type="text" class="form-control" th:field="*{subject}" placeholder="Tiêu đề email" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Body:</label>
+          <textarea class="form-control" th:field="*{body}" rows="5" placeholder="Nội dung email" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">File đính kèm (nếu có):</label>
+          <input type="text" class="form-control" th:field="*{filenames}" placeholder="Nhập đường dẫn file, cách nhau bằng dấu phẩy">
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-success flex-fill">Gửi trực tiếp</button>
+          <button type="submit" class="btn btn-warning flex-fill"
+                  th:formaction="@{/mail/queue}">Xếp hàng đợi</button>
+        </div>
+      </form>
+
+      <p class="text-center mt-3 fw-bold" th:text="${message}"></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
